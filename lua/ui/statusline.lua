@@ -23,7 +23,7 @@ function _G.setup_statusline()
   local filename = vim.fn.expand('%:t')
   local pos = '%p%%:%l:%c'
 
-  filename = (filename ~= '' and filename) or 'Untitled'
+  filename = (filename ~= '' and filename) or 'No Name'
 
   return '%#StatusLineBold#' .. '   ' .. mode_icon() .. '   |' .. ' ' .. filename .. ' |' .. '%=' .. '| ' .. pos .. ' ' .. '%#StatusLine#'
 end

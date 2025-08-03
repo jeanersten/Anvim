@@ -10,7 +10,7 @@ function _G.setup_tabline()
   local tabs     = ''
   local flags = '%h%m%r'
 
-  filename = (filename ~= '' and filename) or 'Untitled'
+  filename = (filename ~= '' and filename) or 'No Name'
 
   for i = 1, vim.fn.tabpagenr('$') do
     local tab_hl = i == vim.fn.tabpagenr() and '%#TabLineSel#' or '%#TabLine#'
