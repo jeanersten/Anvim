@@ -1,0 +1,12 @@
+vim.keymap.set('i', 'df', '<ESC>', {})
+vim.keymap.set('t', 'df', '<C-\\><C-n>', {})
+vim.keymap.set('n', '<C-c>', '<CMD> close <CR>', {})
+
+vim.keymap.set('n', '<M-k>', '<CMD> wincmd k <CR>', {})
+vim.keymap.set('n', '<M-j>', '<CMD> wincmd j <CR>', {})
+vim.keymap.set('n', '<M-l>', '<CMD> wincmd l <CR>', {})
+vim.keymap.set('n', '<M-h>', '<CMD> wincmd h <CR>', {})
+vim.keymap.set('n', '<M-Up>',    '<CMD> resize +1 | set cmdheight=1 <CR>', {})
+vim.keymap.set('n', '<M-Down>',  '<CMD> resize -1 | set cmdheight=1 <CR>', {})
+vim.keymap.set('n', '<M-Right>', '<CMD> vertical resize +1 | set cmdheight=1 <CR>', {})
+vim.keymap.set('n', '<M-Left>',  '<CMD> vertical resize -1 | set cmdheight=1 <CR>', {})
