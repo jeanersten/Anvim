@@ -27,4 +27,6 @@ vim.opt.confirm = true
 vim.opt.mouse = 'a'
 vim.opt.scrolloff = 8
 
+vim.opt.statusline = '%!v:lua.setup_statusline()'
 vim.opt.tabline = '%!v:lua.setup_tabline()'
+vim.opt.showmode = false
