@@ -5,9 +5,9 @@ local state = { -- module window state
     buffer = -1,
     window = -1
   },
-  current_directory = vim.fn.getcwd(),
+  current_directory   = vim.fn.getcwd(),
   workspace_directory = vim.fn.getcwd(),
-  cursor_position   = 1
+  cursor_position     = 1
 }
 
 local icons = { -- module icons
