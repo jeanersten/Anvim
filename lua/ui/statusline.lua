@@ -21,14 +21,29 @@ local function get_mode_string()
   return mode_string[mode] or '????' -- return string by name or '????' as notation to unknown
 end
 
+-- Get File Name
+-- return : string of file name
+local function get_file_name()
+  local file_name = ''
+  
+  if vim.bo.filetype == 'file_explorer' then
+    file_name = 'Explorer'
+  elseif vim.bo.buftype == 'terminal' then
+    file_name = 'Terminal'
+  else
+    file_name = vim.fn.expand('%:t')
+    file_name = (file_name ~= '' and file_name) or 'No Name'
+  end
+
+  return file_name
+end
+
 -- Setup Statusline
 -- return : string of neovim statusline formatting rule
 function _G.setup_statusline()
-  local file_name       = vim.fn.expand('%:t') -- get current active file name
-  local mode_string     = get_mode_string()    -- get mode string
-  local cursor_position = '%p%%:%l:%c'         -- get position info of the cursor in a file
-
-  file_name = (file_name ~= '' and file_name) or 'No Name' -- file name will be 'No Name' if not recognized
+  local file_name       = get_file_name()   -- get current active file name
+  local mode_string     = get_mode_string() -- get mode string
+  local cursor_position = '%p%%:%l:%c'      -- get position info of the cursor in a file
 
   local format = { -- table of string formatting rule
     '%#StatusLine#', -- begin format

@@ -1,11 +1,28 @@
+-- Get File Name
+-- return : string of file name
+local function get_file_name()
+  local file_name = ''
+  
+  if vim.bo.filetype == 'file_explorer' then
+    file_name = 'Explorer'
+  elseif vim.bo.buftype == 'terminal' then
+    file_name = 'Terminal'
+  else
+    file_name = vim.fn.expand('%:t')
+    file_name = (file_name ~= '' and file_name) or 'No Name'
+  end
+
+  return file_name
+end
+
 -- Setup Tabline
 -- return : string of neovim tabline formatting rule
 function _G.setup_tabline()
   local statusline_hl = vim.api.nvim_get_hl(0, {name = 'StatusLine'}) -- get statusline highlight
-  local banner     = 'Neovim!'             -- banner/title to show
-  local file_name  = vim.fn.expand('%:t')  -- get file name
-  local file_flags = '%h%m%r'              -- get file flags
-  local tabs       = ''                    -- contain tabs
+  local banner     = 'Neovim!'       -- banner/title to show
+  local file_name  = get_file_name() -- get file name
+  local file_flags = '%h%m%r'        -- get file flags
+  local tabs       = ''              -- contain tabs
 
   file_name = (file_name ~= '' and file_name) or 'No Name' -- file name will be 'No Name' if not recognized
 
