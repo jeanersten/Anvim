@@ -22,7 +22,7 @@ local function get_mode_string()
 end
 
 -- Setup Statusline
--- return: string of neovim statusline formatting rule
+-- return : string of neovim statusline formatting rule
 function _G.setup_statusline()
   local file_name       = vim.fn.expand('%:t') -- get current active file name
   local mode_string     = get_mode_string()    -- get mode string

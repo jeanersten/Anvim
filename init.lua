@@ -4,3 +4,5 @@ require('core.options')
 
 require('ui.statusline')
 require('ui.tabline')
+
+require('util.explorer').setup()

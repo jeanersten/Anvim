@@ -1,5 +1,5 @@
 -- Setup Tabline
--- return: string of neovim tabline formatting rule
+-- return : string of neovim tabline formatting rule
 function _G.setup_tabline()
   local statusline_hl = vim.api.nvim_get_hl(0, {name = 'StatusLine'}) -- get statusline highlight
   local banner     = 'Neovim!'             -- banner/title to show
@@ -14,9 +14,9 @@ function _G.setup_tabline()
     tabs = tabs .. tab_hl .. i .. ' %T'
   end
 
-  vim.api.nvim_set_hl(0, 'TabLine',     statusline_hl)                                               -- set tabline (inactive) style same as the statusline
-  vim.api.nvim_set_hl(0, 'TabLineFill', statusline_hl)                                               -- settabline background same as the statusline
-  vim.api.nvim_set_hl(0, 'TabLineSel',  {fg = statusline_hl.fg, bg = statusline_hl.bg, bold = true}) -- set active tabline to use bold style
+  vim.api.nvim_set_hl(0, 'TabLine', statusline_hl)                                                  -- set tabline (inactive) style same as the statusline
+  vim.api.nvim_set_hl(0, 'TabLineFill', statusline_hl)                                              -- settabline background same as the statusline
+  vim.api.nvim_set_hl(0, 'TabLineSel', {fg = statusline_hl.fg, bg = statusline_hl.bg, bold = true}) -- set active tabline to use bold style
 
   local format = { -- table of string formatting rule
     '%#TabLine#', -- begin format
