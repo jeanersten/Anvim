@@ -1,9 +1,9 @@
 -- Get File Name
 -- return : string of file name
 local function get_file_name()
-  local file_name = ''
-  
-  if vim.bo.filetype == 'file_explorer' then
+  local file_name = '' -- store file name
+
+  if vim.bo.filetype == 'explorer' then
     file_name = 'Explorer'
   elseif vim.bo.buftype == 'terminal' then
     file_name = 'Terminal'
@@ -18,11 +18,11 @@ end
 -- Setup Tabline
 -- return : string of neovim tabline formatting rule
 function _G.setup_tabline()
-  local statusline_hl = vim.api.nvim_get_hl(0, {name = 'StatusLine'}) -- get statusline highlight
-  local banner     = 'Neovim!'       -- banner/title to show
-  local file_name  = get_file_name() -- get file name
-  local file_flags = '%h%m%r'        -- get file flags
-  local tabs       = ''              -- contain tabs
+  local statusline_hl = vim.api.nvim_get_hl(0, {name = 'StatusLine'}) -- store statusline highlight
+  local banner     = 'Neovim!'       -- store banner/title to show
+  local file_name  = get_file_name() -- store file name
+  local file_flags = '%h%m%r'        -- store file flags
+  local tabs       = ''              -- store tabs
 
   file_name = (file_name ~= '' and file_name) or 'No Name' -- file name will be 'No Name' if not recognized
 
@@ -53,5 +53,5 @@ function _G.setup_tabline()
     '%#TabLine#'  -- end format
   }
 
-  return table.concat(format) -- return string of concatenated table 
+  return table.concat(format)
 end
