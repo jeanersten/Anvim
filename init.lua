@@ -1,5 +1,6 @@
 require('core.globals')
 require('core.keymaps')
+require('core.lsp')
 require('core.options')
 
 require('ui.statusline')
