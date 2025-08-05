@@ -4,8 +4,7 @@ local state = { -- module window state
   floating = {
     buffer = -1,
     window = -1
-  },
-  workspace_directory = vim.fn.getcwd()
+  }
 }
 
 -- Create the Floating Window
