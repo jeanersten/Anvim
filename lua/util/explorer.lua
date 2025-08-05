@@ -11,15 +11,15 @@ local state = { -- module window state
 }
 
 local icons = { -- module icons
-  folder     = '',
-  file       = '',
-  executable = '',
-  image      = '',
-  text       = '',
-  code       = '',
-  config     = '',
-  hidden     = '',
-  symlink    = ''
+  header_folder = '󱧶 ',
+  up_folder     = '󰅃 ',
+  folder        = '󰉋 ',
+  file          = '󰈔 ',
+  code          = '󰈮 ',
+  config        = '󱁻 ',
+  image         = '󰈟 ',
+  text          = '󱇧 ',
+  executable    = '󰲋 ',
 }
 
 -- Get File Icon
@@ -45,6 +45,8 @@ local function get_file_icon(name, is_directory)
     return icons.image
   elseif vim.tbl_contains({'txt', 'md'}, extension) then                        -- text file
     return icons.text
+  elseif vim.tbl_contains({'exe'}, extension) then                              -- executable file
+    return icons.executable
   else                                                                          -- fallback to default if not recognized
     return icons.file
   end
@@ -69,7 +71,7 @@ local function get_directory_contents(directory)
       name = '..',
       path = vim.fn.fnamemodify(directory, ':h'),
       is_directory = true,
-      icon = ''
+      icon = icons.up_folder
     })
   end
   
@@ -120,11 +122,11 @@ local function render_buffer(buffer, directory)
   local items = get_directory_contents(directory) -- store all items
   local lines = {}                                -- store line to display
   
-  table.insert(lines, '' .. directory)
+  table.insert(lines, ' ' .. icons.header_folder .. ' ' .. directory)
   table.insert(lines, string.rep('─', 100))
   
   for _, item in ipairs(items) do -- loop through existing items and insert it to line
-    local line = string.format("%s %s", item.icon, item.name)
+    local line = string.format('. %s %s', item.icon, item.name)
     if item.is_directory then
       line = line .. (vim.fn.has('win32') == 1 and '\\' or '/')
     end
@@ -143,10 +145,10 @@ end
 -- return : table of buffer and window
 local function create_floating_window(opts)
   opts = opts or {}
-  local width  = math.floor(vim.o.columns * 0.18) -- window width
-  local height = math.floor(vim.o.lines * 0.28)   -- window height
-  local row    = math.floor(1)                    -- row location
-  local col    = math.floor(1)                    -- colum location
+  local width  = math.floor(vim.o.columns * 0.20)             -- window width
+  local height = math.floor(vim.o.lines * 0.85)               -- window height
+  local row    = math.floor(((vim.o.lines - height) / 2) - 1) -- row location
+  local col    = math.floor(1)                                -- colum location
   local buffer = nil
   
   local window_config = { -- neovim window config
@@ -254,6 +256,7 @@ end
 function M.toggle()
   if vim.api.nvim_win_is_valid(state.floating.window) then
     vim.api.nvim_win_hide(state.floating.window)
+    state.floating.window = -1
   else
     state.floating = create_floating_window({ buffer = state.floating.buffer })
     
@@ -266,9 +269,17 @@ end
 
 -- Setup Module
 -- return : nothing
-function M.setup()
-  vim.api.nvim_create_user_command('FileExplorer', M.toggle, {})
-  vim.keymap.set('n', '<Leader>eo', M.toggle, {desc = 'Toggle File Explorer'})
+function M.setup() vim.api.nvim_create_user_command('FileExplorer', M.toggle, {})
+  vim.api.nvim_create_autocmd({'WinEnter', 'CmdlineEnter'}, {
+    callback = function()
+      if vim.api.nvim_win_is_valid(state.floating.window) then
+        vim.api.nvim_win_hide(state.floating.window)
+        state.floating.window = -1
+      end
+    end,
+  })
+
+  vim.keymap.set('n', '<M-e>', M.toggle, {})
 end
 
 return M

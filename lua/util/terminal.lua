@@ -5,8 +5,7 @@ local state = { -- module window state
     buffer = -1,
     window = -1
   },
-  workspace_directory = vim.fn.getcwd(),
-  cursor_position     = 1
+  workspace_directory = vim.fn.getcwd()
 }
 
 -- Create the Floating Window
@@ -64,6 +63,7 @@ end
 function M.toggle()
   if vim.api.nvim_win_is_valid(state.floating.window) then
     vim.api.nvim_win_hide(state.floating.window)
+    state.floating.window = -1
   else
     state.floating = create_floating_window({ buffer = state.floating.buffer })
 
@@ -79,7 +79,16 @@ end
 -- return : nothing
 function M.setup()
   vim.api.nvim_create_user_command('Terminal', M.toggle, {})
-  vim.keymap.set('n', '<Leader>to', M.toggle, {desc = 'Toggle Terminal'})
+  vim.api.nvim_create_autocmd({'WinEnter', 'CmdlineEnter'}, {
+    callback = function()
+      if vim.api.nvim_win_is_valid(state.floating.window) then
+        vim.api.nvim_win_hide(state.floating.window)
+        state.floating.window = -1
+      end
+    end,
+  })
+
+  vim.keymap.set('n', '<M-t>', M.toggle, {desc = 'Toggle Terminal'})
 end
 
 return M
